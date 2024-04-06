@@ -26,7 +26,7 @@ class MyFeed extends StatelessWidget {
       ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance.collection('posts').snapshots(),
-        builder: (context, snapshot){
+        builder: (context, AsyncSnapshot<QuerySnapshot<Map<String,dynamic>>> snapshot){
           if(snapshot.connectionState==ConnectionState.waiting){
             return const Center(
               child: CircularProgressIndicator(),
@@ -37,7 +37,7 @@ class MyFeed extends StatelessWidget {
             itemCount: snapshot.data!.docs.length,
             itemBuilder: 
             (context,
-            index)=>PostCard());
+            index)=>PostCard(snap: snapshot.data!.docs[index].data(),));
 
         },)
     );
