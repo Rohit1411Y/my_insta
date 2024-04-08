@@ -1,14 +1,18 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:my_insta/models/user_model.dart';
 import 'package:my_insta/providers/user_provider.dart';
 import 'package:my_insta/resources/firestore_methods.dart';
+import 'package:my_insta/screens/comments_screen.dart';
 import 'package:my_insta/utils/colors.dart';
+import 'package:my_insta/utils/utils.dart';
 import 'package:my_insta/widgets/like_animation.dart';
 import 'package:provider/provider.dart';
 
 class PostCard extends StatefulWidget {
   final snap;
+  
   const PostCard({super.key,required this.snap});
 
   @override
@@ -16,7 +20,27 @@ class PostCard extends StatefulWidget {
 }
 
 class _PostCardState extends State<PostCard> {
+  int commentLength = 0;
   bool isLikeAnimating = false;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getComments();
+  }
+  void getComments()async{
+  try{
+   QuerySnapshot snap = await FirebaseFirestore.instance.collection('posts').
+   doc(widget.snap['postId']).collection('comments').get();
+   commentLength = snap.docs.length;
+  }
+  catch(err){
+    showSnackBar(err.toString(), context);
+  }
+  setState(() {
+    
+  });
+  }
   @override
   Widget build(BuildContext context) {
     final UserModel  userModel = Provider.of<UserProvider>(context).getUser;
@@ -138,7 +162,9 @@ class _PostCardState extends State<PostCard> {
                 ),
               ),
                  IconButton(onPressed: (){
-
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=> CommentsScreen(
+                    snap: widget.snap,
+                  )));
               }, icon: const Icon(
                 Icons.comment_outlined,
                
@@ -207,7 +233,7 @@ class _PostCardState extends State<PostCard> {
                 },
                 child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 4),
-                  child:const  Text("view all 24 comments",
+                  child:  Text("view all $commentLength comments",
                   style: TextStyle(fontSize: 16,color: secondaryColor),),
                 ),
               ),
