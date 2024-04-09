@@ -77,6 +77,7 @@ class _PostCardState extends State<PostCard> {
                 ),
                 IconButton(
                     onPressed: () {
+                      userModel.uid==widget.snap['uid']?
                       showDialog(
                           context: context,
                           builder: (context) => Dialog(
@@ -86,7 +87,10 @@ class _PostCardState extends State<PostCard> {
                                   shrinkWrap: true,
                                   children: ['delete']
                                       .map((e) => InkWell(
-                                            onTap: () {},
+                                            onTap: () {
+                                              FirestoreMethods().deletePost(widget.snap['postId']);
+                                              Navigator.of(context).pop();
+                                            },
                                             child: Container(
                                               padding:
                                                   const EdgeInsets.symmetric(
@@ -97,7 +101,37 @@ class _PostCardState extends State<PostCard> {
                                           ))
                                       .toList(),
                                 ),
-                              ));
+                              )
+                              )
+                              :
+
+
+                                showDialog(
+                          context: context,
+                          builder: (context) => Dialog(
+                                child: ListView(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 16),
+                                  shrinkWrap: true,
+                                  children: ['report']
+                                      .map((e) => InkWell(
+                                            onTap: () {
+                                              // FirestoreMethods().deletePost(widget.snap['postId']);
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 12,
+                                                      horizontal: 16),
+                                              child: Text(e),
+                                            ),
+                                          ))
+                                      .toList(),
+                                ),
+                              )
+                              );
+                              
                     },
                     icon: const Icon(Icons.more_vert)),
               ],
