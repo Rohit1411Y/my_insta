@@ -19,18 +19,18 @@ class AuthMethods {
   }
 
   Future<String> signUpUser({
-    required String? email,
-    required String ?password,
-    required String ? username,
-    required String?bio,
-    required Uint8List ?file,
+    required String email,
+    required String password,
+    required String  username,
+    required String bio,
+    required Uint8List file,
   }) async {
     String res = "some error occured";
     try {
-      if (email!.isNotEmpty ||
-          password!.isNotEmpty ||
-          username!.isNotEmpty ||
-          bio!.isNotEmpty ||
+      if (email.isNotEmpty ||
+          password.isNotEmpty ||
+          username.isNotEmpty ||
+          bio.isNotEmpty ||
           file != null
           ) {
         UserCredential credential = await _auth.createUserWithEmailAndPassword(
@@ -40,8 +40,8 @@ class AuthMethods {
       UserModel userModel = UserModel(email: email,
        uid: credential.user!.uid,
         photoUrl: photoUrl, 
-        username: username!, 
-        bio: bio!, 
+        username: username, 
+        bio: bio, 
         followers: [],
         following: []);
       await _firestore.collection('users').doc(credential.user!.uid).set(

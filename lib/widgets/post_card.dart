@@ -43,7 +43,7 @@ class _PostCardState extends State<PostCard> {
   }
   @override
   Widget build(BuildContext context) {
-    final UserModel  userModel = Provider.of<UserProvider>(context).getUser;
+    final UserModel userModel = Provider.of<UserProvider>(context).getUser;
     return Container(
       color: mobilebackgroundColor,
       child: Column(

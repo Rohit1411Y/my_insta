@@ -5,6 +5,8 @@ import 'package:my_insta/models/user_model.dart';
 import 'package:my_insta/providers/user_provider.dart';
 import 'package:my_insta/screens/add_post.dart';
 import 'package:my_insta/screens/feed_screen.dart';
+import 'package:my_insta/screens/profile_screen.dart';
+import 'package:my_insta/screens/search_screen.dart';
 import 'package:my_insta/utils/colors.dart';
 import 'package:provider/provider.dart';
 
@@ -18,13 +20,13 @@ class MobileScreenLayout extends StatefulWidget {
 class _MobileScreenLayoutState extends State<MobileScreenLayout> {
   int selectedIndex = 0;
 
-  static const List<Widget> widgetOptions = <Widget>[
-     MyFeed(),
+  static List<Widget> widgetOptions = <Widget>[
+    const MyFeed(),
    
-     Text("search"),
-     AddPostSCreen(),
-     Text('notifications'),
-     Text("profile"),
+    const SearchScreen(),
+    const AddPostSCreen(),
+    const Text('notifications'),
+     ProfileScreen(uid: FirebaseAuth.instance.currentUser!.uid,),
 
   ];
   void onItemTaped(int index){
