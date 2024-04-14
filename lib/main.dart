@@ -20,10 +20,20 @@ void main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
+  @override
+  void setState(VoidCallback fn) {
+    // TODO: implement setState
+    super.setState(fn);
+  }
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -40,6 +50,7 @@ class MyApp extends StatelessWidget {
         builder: (context, snapshot){
           if(snapshot.connectionState==ConnectionState.active){
             if(snapshot.hasData){
+             
               return const ResponsiveLayoutScreen(webScreenLayout: WebScreenLayout(), mobileScreenLayout: MobileScreenLayout());
             }
             else if(snapshot.hasError){

@@ -20,10 +20,17 @@ class _ResponsiveLayoutScreenState extends State<ResponsiveLayoutScreen> {
     super.initState();
     addData();
   }
+
   addData()async{
     UserProvider _userProvider = Provider.of(context,listen: false);
     await _userProvider.refreshUser();
   }
+  @override
+  void setState(VoidCallback fn) {
+    // TODO: implement setState
+    super.setState(fn);
+  }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder:(context,constraints){
